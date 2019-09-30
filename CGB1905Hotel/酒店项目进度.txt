@@ -1,0 +1,17 @@
+后台基于RuoYi实现
+
+订单表: pojo:Order
+前台弹窗按钮接口已完成
+
+前台保存订单接口已完成  (HotelOrderController  /saveOrder)
+
+注册前端html和js写好
+需要写后端controller
+
+用redis锁, 实现当商家删除订单, 这时有新订单进入数据库, 导致前后数据库数量一致, 不弹出消息框
+
+
+待处理: 客房表
+
+
+

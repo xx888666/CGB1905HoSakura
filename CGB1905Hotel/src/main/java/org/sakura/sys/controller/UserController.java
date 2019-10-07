@@ -4,15 +4,13 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 //import org.apache.http.protocol.HTTP;
+import org.sakura.common.exception.ServiceException;
 import org.sakura.common.pojo.User;
 import org.sakura.common.vo.SysResult;
 import org.sakura.sys.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 //import com.alibaba.dubbo.config.annotation.Reference;
 //import com.fasterxml.jackson.databind.util.JSONPObject;
@@ -80,10 +78,59 @@ public class UserController {
 
 	//不考虑跨域请求
 	//注册功能
-	@PostMapping("/register")
-	public SysResult register(User user) {
+	//@PostMapping("/register")
+	@RequestMapping("/register")
+	public SysResult register(User user, String username) {
+		System.out.println(username);
+		System.out.println(user);
 
-		return null;
+		userService.register(user);
+
+		SysResult sysResult = new SysResult(1, "注册成功", null);
+
+		return sysResult;
 	}
 
+
+	/**
+	 * 关于cookie的使用
+	 * cookie.setPath("/"); 默认
+	 * 	全部的请求都可见该cookie信息
+	 * 	www.jt.com
+	 * cookie.setPath("/aa");
+	 * 	 只有在/aa路径下的url才能访问该cookie
+	 * 	 www.jt.com/aa/a.html
+	 *
+	 * 关于Cookie的使用时间
+	 * 	cookie.setMaxAge(>0); cookie的存活时间
+	 * 	cookie.setMaxAge(0);  删除cookie
+	 *  cookie.setMaxAge(-1); 关闭会话之后删除cookie
+	 * @param user
+	 * @return
+	 */
+	@RequestMapping("/doLogin")
+	@ResponseBody
+	public SysResult login(User user,HttpServletResponse response) {
+		//1.校验数据是否正确.获取密钥
+		//String ticket = userService.findUserByUP(user);
+		//将登录用户的用户名存入cookie
+		String loginUsername = userService.findUserByUP(user);
+		if(StringUtils.isEmpty(loginUsername)) {
+
+			throw new ServiceException("用户名或密码错误");
+		}
+		//2.如果程序执行到这里.表示密钥有值.写入cookie
+		Cookie cookie = new Cookie("HOTEL_TICKET", loginUsername);
+		cookie.setMaxAge(7 * 24 * 3600);
+		cookie.setPath("/");
+		//设定cookie的共享!!!!! sso
+		cookie.setDomain("");
+
+		//将cookie写入客户端
+		response.addCookie(cookie);
+		return SysResult.success();
+	}
+
+
 }
+

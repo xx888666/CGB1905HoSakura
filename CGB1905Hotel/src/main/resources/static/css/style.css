@@ -1,46 +1,63 @@
-/*----------------------------------------------------
-@File: Default Styles
-@Author: Rocky
-@URL: http://wethemez.com
-Author E-mail: rockybd1995@gmail.com
+Skip to content
+Search or jump to…
 
-This file contains the styling for the actual theme, this
-is the file you need to edit to change the look of the
-theme.
----------------------------------------------------- */
-/*=====================================================================
-@Template Name: Royal Hotel
-@Author: Rocky
-@Developed By: Rocky
-@Developer URL: http://rocky.wethemez.com
-Author E-mail: rockybd1995@gmail.com
+Pull requests
+Issues
+Marketplace
+Explore
 
-@Default Styles
+@xx888666
+Learn Git and GitHub without any code!
+Using the Hello World guide, you’ll start a branch, write comments, and open a pull request.
 
-Table of Content:
-01/ Variables
-02/ predefin
-03/ header
-04/ button
-05/ banner
-06/ breadcrumb
-07/ about
-08/ team
-09/ project 
-10/ price 
-11/ team 
-12/ blog 
-13/ video  
-14/ features  
-15/ career  
-16/ contact 
-17/ footer
 
-=====================================================================*/
-/*----------------------------------------------------*/
-/*font Variables*/
-/*Color Variables*/
-/*=================== fonts ====================*/
+1
+00xx888666/CGB1905HoSakura
+Code Issues 0 Pull requests 0 Projects 0 Wiki Security Insights Settings
+CGB1905HoSakura/CGB1905Hotel/src/main/resources/static/css/style.css
+@xx888666 xx888666 0930第一次提交
+077c1ed 7 days ago
+3604 lines (3034 sloc)  63 KB
+
+  /*----------------------------------------------------
+  @File: Default Styles
+  @Author: Rocky
+  @URL: http://wethemez.com
+  Author E-mail: rockybd1995@gmail.com
+  This file contains the styling for the actual theme, this
+  is the file you need to edit to change the look of the
+  theme.
+  ---------------------------------------------------- */
+  /*=====================================================================
+  @Template Name: Royal Hotel
+  @Author: Rocky
+  @Developed By: Rocky
+  @Developer URL: http://rocky.wethemez.com
+  Author E-mail: rockybd1995@gmail.com
+  @Default Styles
+  Table of Content:
+  01/ Variables
+  02/ predefin
+  03/ header
+  04/ button
+  05/ banner
+  06/ breadcrumb
+  07/ about
+  08/ team
+  09/ project
+  10/ price
+  11/ team
+  12/ blog
+  13/ video
+  14/ features
+  15/ career
+  16/ contact
+  17/ footer
+  =====================================================================*/
+  /*----------------------------------------------------*/
+  /*font Variables*/
+  /*Color Variables*/
+  /*=================== fonts ====================*/
 @import url("https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700");
 .col-md-offset-right-1, .col-lg-offset-right-1 {
   margin-right: 8.33333333%;

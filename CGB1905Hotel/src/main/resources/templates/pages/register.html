@@ -32,7 +32,7 @@
                 <div class="col-lg-6 bg-white">
                     <div class="form d-flex align-items-center">
                         <div class="content">
-                            <form action="www.bb.com" method="post">
+                            <form action="/user/register" method="post">
                                 <div class="form-group">
                                     <input id="register-username" class="input-material" type="text"
                                            name="registerUsername" placeholder="请输入用户名/姓名">
@@ -89,7 +89,8 @@
 
                                 <div class="form-group">
                                     <!-- 注册按钮, 将上面表单提交到指定后台url -->
-                                    <input id="regbtn" class="btn btn-primary" type="submit" name="" value="注册">
+                                    <input id="regbtn" class="btn btn-primary" type="button" name="" value="注册" onclick="">
+                                    <input id="regbtn1" class="btn btn-primary" type="button" name="" value="注册" onclick="register()">
                             </form>
                         </div>
                         <small>已有账号?</small>
@@ -158,7 +159,7 @@
             if (!flagName) {
                 $("#register-username").addClass("form-control is-invalid");
                 //当用户名重复时, 注册按钮应该被禁止
-                $("#regbtn").attr("type", "button").click(function () {
+                $("#regbtn").attr("onclick", "").click(function () {
                     alert("注册失败");
                     //刷新网页, 让用户重新输入
                     location.reload();
@@ -167,7 +168,7 @@
             if (!flagPas) {
                 $("#register-password").addClass("form-control is-invalid");
                 //当用户名重复时, 注册按钮应该被禁止
-                $("#regbtn").attr("type", "button").click(function () {
+                $("#regbtn").attr("onclick", "").click(function () {
                     alert("注册失败");
                     //刷新网页, 让用户重新输入
                     location.reload();
@@ -176,7 +177,7 @@
             if (!flagPass) {
                 $("#register-passwords").addClass("form-control is-invalid");
                 //当用户名重复时, 注册按钮应该被禁止
-                $("#regbtn").attr("type", "button").click(function () {
+                $("#regbtn").attr("onclick", "").click(function () {
                     alert("注册失败");
                     //刷新网页, 让用户重新输入
                     location.reload();
@@ -221,7 +222,7 @@
                         flagName = false;
 
                         //当用户名重复时, 注册按钮应该被禁止
-                        $("#regbtn").attr("type", "button").click(function () {
+                        $("#regbtn").attr("onclick", "").click(function () {
                             alert("注册失败");
                             //刷新网页, 让用户重新输入
                             location.reload();
@@ -234,7 +235,7 @@
                         flagPass = true;
                         usernameExist.html("该用户名可以使用");
                         //将注册按钮改为submit状态
-                        $("#regbtn").attr("type", "submit");
+                        $("#regbtn").attr("onclick", "register()");
 
                     }
                 },
@@ -246,7 +247,7 @@
 
 
         //判断用户输入的手机号是否符合格式
-        $("#register-phone").blur(function () {
+        $("#register-phone").change(function () {
             //获取用户输入的手机号码
             var phone = $("#register-phone").val();
             //用正则表达式判断
@@ -257,7 +258,7 @@
 
                 $("#checkPhone").html("手机号格式错误");
                 //当手机号格式错误时, 注册按钮应该被禁止
-                $("#regbtn").attr("type", "button").click(function () {
+                $("#regbtn").attr("onclick", "").click(function () {
                     alert("注册失败");
                     //刷新网页, 让用户重新输入
                     location.reload();
@@ -269,7 +270,7 @@
                 $("#register-phone").addClass("form-control is-valid");
 
                 //将注册按钮改为submit状态
-                $("#regbtn").attr("type", "submit");
+                $("#regbtn").attr("onclick", "register()");
                 //将错误信息删除
                 $("#checkPhone").html("");
             }
@@ -292,7 +293,7 @@
                 $("#register-IdNumber").addClass("form-control is-invalid");
 
                 //当身份证格式错误时, 注册按钮应该被禁止
-                $("#regbtn").attr("type", "button").click(function () {
+                $("#regbtn").attr("onclick", "").click(function () {
                     alert("注册失败");
                     //刷新网页, 让用户重新输入
                     location.reload();
@@ -304,7 +305,7 @@
                 $("#register-IdNumber").addClass("form-control is-valid");
 
                 //将注册按钮改为submit状态
-                $("#regbtn").attr("type", "submit");
+                $("#regbtn").attr("onclick", "register()");
                 //将错误提示删除
                 $("#checkIdNumber").html("");
             }
@@ -312,7 +313,52 @@
         });
 
 
+
     })
+    //注册按钮的点击事件, 运行这个方法实现用户注册入库
+    function register() {
+        //将注册参数封装到对象
+        var user = {
+            username:$("#register-username").val(),
+            password:$("#register-passwords").val(),
+            name:$("#register-name").val(),
+            idNumber:$("#register-IdNumber").val(),
+            phone:$("#register-phone").val()
+        }
+        console.log(user);
+
+        // 使用ajax去后台实现注册
+        $.ajax({
+            url: "user/register",
+            type: 'post',
+            data: {
+                'username':$("#register-username").val(),
+                'password':$("#register-passwords").val(),
+                'name':$("#register-name").val(),
+                'idNumber':$("#register-IdNumber").val(),
+                'phone':$("#register-phone").val()
+            },
+            dataType:"json",
+
+            success: function (data) {
+                console.log(data);
+                //当状态码为1, 说明注册成功
+                if (data.state == 1) {
+                    alert(data.message);
+                    //将注册按钮改为submit状态
+                    //$("#regbtn").attr("onclick", "register()");
+                    //跳转至登录页面
+                    window.location.href="login";
+
+                } else {
+                    //如果状态码不为1, 说明出现了异常, 弹框提示, 并不做其他事情
+                    alert(data.message);
+
+                }
+            }
+        });
+
+    }
 </script>
 </body>
 </html>

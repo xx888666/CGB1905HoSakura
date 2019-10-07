@@ -9,4 +9,7 @@ public interface UserMapper {
 
     User checkUsername(String username);
 
+    int register(User user);
+
+    User findUserByUp(User user);
 }

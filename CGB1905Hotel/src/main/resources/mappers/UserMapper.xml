@@ -2,8 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.sakura.sys.dao.UserMapper">
 
+	<!--检查用户名是否重复-->
 	<select id="checkUsername" resultType="org.sakura.common.pojo.User">
 		select * from tb_user where username = #{username}
+	</select>
+
+	<!--注册sql语句-->
+	<insert id="register">
+		insert into tb_user values (null, #{username}, #{password}, #{name}, #{hotelId}, #{idNumber}, #{phone})
+
+	</insert>
+
+	<!--登录sql语句-->
+	<select id="findUserByUp" resultType="org.sakura.common.pojo.User">
+		select * from tb_user where username = #{username} and password = #{password}
+
 	</select>
 
 </mapper>
